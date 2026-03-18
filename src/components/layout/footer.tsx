@@ -1,32 +1,38 @@
-import Link from "next/link";
-import Image from "next/image";
+"use client";
 
-const FOOTER_LINKS = [
-  {
-    title: "Produkt",
-    links: [
-      { href: "/features", label: "Features" },
-      { href: "/faq", label: "FAQ" },
-      { href: "https://buddyspot.app", label: "App öffnen", external: true },
-    ],
-  },
-  {
-    title: "Unternehmen",
-    links: [
-      { href: "/about", label: "Über uns" },
-      { href: "/contact", label: "Kontakt" },
-    ],
-  },
-  {
-    title: "Rechtliches",
-    links: [
-      { href: "/impressum", label: "Impressum" },
-      { href: "/datenschutz", label: "Datenschutz" },
-    ],
-  },
-];
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/navigation";
 
 export function Footer() {
+  const t = useTranslations("footer");
+  const nav = useTranslations("nav");
+
+  const footerLinks: { title: string; links: { href?: string; label: string; external?: string }[] }[] = [
+    {
+      title: t("product"),
+      links: [
+        { href: "/features", label: nav("features") },
+        { href: "/faq", label: nav("faq") },
+        { label: nav("openApp"), external: "https://buddyspot.app" },
+      ],
+    },
+    {
+      title: t("company"),
+      links: [
+        { href: "/about", label: nav("about") },
+        { href: "/contact", label: nav("contact") },
+      ],
+    },
+    {
+      title: t("legal"),
+      links: [
+        { href: "/impressum", label: t("impressum") },
+        { href: "/datenschutz", label: t("datenschutz") },
+      ],
+    },
+  ];
+
   return (
     <footer className="bg-gray-50 dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800">
       <div className="max-w-6xl mx-auto px-5 py-12 md:py-16">
@@ -39,26 +45,28 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
-              Light Up Your Walk.<br />
-              Die Community für Hundemenschen.
+              {t("tagline")}<br />
+              {t("community")}
             </p>
           </div>
 
-          {FOOTER_LINKS.map((group) => (
+          {footerLinks.map((group) => (
             <div key={group.title}>
               <p className="text-xs font-bold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3">
                 {group.title}
               </p>
               <ul className="space-y-2.5">
                 {group.links.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      {...("external" in link ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                      className="text-sm text-gray-600 dark:text-gray-400 hover:text-brand transition"
-                    >
-                      {link.label}
-                    </Link>
+                  <li key={link.label}>
+                    {link.external ? (
+                      <a href={link.external} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 dark:text-gray-400 hover:text-brand transition">
+                        {link.label}
+                      </a>
+                    ) : (
+                      <Link href={link.href as any} className="text-sm text-gray-600 dark:text-gray-400 hover:text-brand transition">
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
@@ -68,7 +76,7 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-gray-200 dark:border-gray-800 text-center">
           <p className="text-xs text-gray-400 dark:text-gray-500">
-            &copy; {new Date().getFullYear()} BuddySpot. Alle Rechte vorbehalten.
+            {t("rights", { year: new Date().getFullYear() })}
           </p>
         </div>
       </div>

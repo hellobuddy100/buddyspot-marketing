@@ -1,26 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { Menu, X, Sun, Moon } from "lucide-react";
-import { usePathname } from "next/navigation";
-
-const NAV_LINKS = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "Über uns" },
-  { href: "/features", label: "Features" },
-  { href: "/faq", label: "FAQ" },
-  { href: "/contact", label: "Kontakt" },
-];
+import { Menu, X, Sun, Moon, Globe } from "lucide-react";
+import { useTranslations, useLocale } from "next-intl";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
+  const t = useTranslations("nav");
+  const locale = useLocale();
+  const router = useRouter();
+
+  const navLinks = [
+    { href: "/" as const, label: t("home") },
+    { href: "/about" as const, label: t("about") },
+    { href: "/features" as const, label: t("features") },
+    { href: "/faq" as const, label: t("faq") },
+    { href: "/contact" as const, label: t("contact") },
+  ];
 
   function toggleTheme() {
     const isDark = document.documentElement.classList.toggle("dark");
     localStorage.setItem("theme", isDark ? "dark" : "light");
+  }
+
+  function switchLocale() {
+    const next = locale === "de" ? "en" : "de";
+    router.replace(pathname, { locale: next });
   }
 
   return (
@@ -34,7 +42,7 @@ export function Navbar() {
         </Link>
 
         <div className="hidden md:flex items-center gap-8">
-          {NAV_LINKS.map(({ href, label }) => (
+          {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -47,18 +55,23 @@ export function Navbar() {
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2">
+          <button onClick={switchLocale} className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-bold text-gray-500 dark:text-gray-400 hover:text-brand hover:bg-gray-50 dark:hover:bg-gray-800 transition" title="Switch language">
+            <Globe className="h-3.5 w-3.5" />
+            {locale === "de" ? "EN" : "DE"}
+          </button>
           <button onClick={toggleTheme} className="p-2 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition">
             <Sun className="h-4 w-4 hidden dark:block" />
             <Moon className="h-4 w-4 block dark:hidden" />
           </button>
-          <Link
+          <a
             href="https://buddyspot.app"
             target="_blank"
+            rel="noopener noreferrer"
             className="hidden md:block px-5 py-2 rounded-lg bg-brand text-white text-sm font-bold hover:bg-brand-dark transition"
           >
-            App öffnen
-          </Link>
+            {t("openApp")}
+          </a>
           <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-gray-600 dark:text-gray-400">
             {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
@@ -67,7 +80,7 @@ export function Navbar() {
 
       {open && (
         <div className="md:hidden bg-white dark:bg-gray-950 border-t border-gray-100 dark:border-gray-800 px-5 pb-5">
-          {NAV_LINKS.map(({ href, label }) => (
+          {navLinks.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
@@ -79,13 +92,14 @@ export function Navbar() {
               {label}
             </Link>
           ))}
-          <Link
+          <a
             href="https://buddyspot.app"
             target="_blank"
+            rel="noopener noreferrer"
             className="mt-4 block w-full text-center px-5 py-3 rounded-lg bg-brand text-white text-sm font-bold"
           >
-            App öffnen
-          </Link>
+            {t("openApp")}
+          </a>
         </div>
       )}
     </header>

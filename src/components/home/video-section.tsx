@@ -1,18 +1,19 @@
 "use client";
 
 import { Play } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Reveal } from "@/components/ui/reveal";
 
 export function VideoSection() {
+  const t = useTranslations("video");
+
   return (
     <section className="py-20 md:py-28 bg-gray-50 dark:bg-gray-900/50">
       <div className="max-w-4xl mx-auto px-5">
         <Reveal>
           <div className="text-center mb-10">
-            <p className="text-sm font-bold uppercase tracking-widest text-brand mb-3">Film</p>
-            <h2 className="text-3xl md:text-4xl font-black tracking-tight">
-              Sieh BuddySpot in Aktion
-            </h2>
+            <p className="text-sm font-bold uppercase tracking-widest text-brand mb-3">{t("label")}</p>
+            <h2 className="text-3xl md:text-4xl font-black tracking-tight">{t("title")}</h2>
           </div>
         </Reveal>
 
@@ -24,7 +25,7 @@ export function VideoSection() {
               </div>
             </div>
             <p className="absolute bottom-6 left-0 right-0 text-center text-sm font-medium text-gray-500 dark:text-gray-400">
-              Werbefilm kommt bald
+              {t("coming")}
             </p>
           </div>
         </Reveal>
