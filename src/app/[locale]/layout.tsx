@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { NextIntlClientProvider, useMessages } from "next-intl";
+import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { notFound } from "next/navigation";
@@ -56,7 +56,7 @@ export default async function LocaleLayout({
         }} />
       </head>
       <body className="bg-white dark:bg-gray-950 text-gray-900 dark:text-gray-100 font-sans antialiased">
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Navbar />
           <main>{children}</main>
           <Footer />
