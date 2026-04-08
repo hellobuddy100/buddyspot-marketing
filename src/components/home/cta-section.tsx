@@ -4,6 +4,11 @@ import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/ui/reveal";
+import {
+  BUDDYSPOT_APP_URL,
+  buddyspotAppLinkRel,
+  buddyspotAppLinkTarget,
+} from "@/lib/buddyspot-app-url";
 
 export function CtaSection() {
   const t = useTranslations("cta");
@@ -19,9 +24,9 @@ export function CtaSection() {
               <p className="mt-4 text-white/80 max-w-md mx-auto leading-relaxed">{t("subtitle")}</p>
               <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
                 <a
-                  href="https://buddyspot.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                  href={BUDDYSPOT_APP_URL}
+                  target={buddyspotAppLinkTarget()}
+                  rel={buddyspotAppLinkRel()}
                   className="flex items-center gap-2 px-8 py-4 rounded-xl bg-white text-brand font-bold text-base hover:bg-gray-50 active:scale-[0.97] transition-all"
                 >
                   {t("button")}

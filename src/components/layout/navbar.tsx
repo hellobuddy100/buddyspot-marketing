@@ -5,6 +5,11 @@ import Image from "next/image";
 import { Menu, X, Sun, Moon, Globe } from "lucide-react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
+import {
+  BUDDYSPOT_APP_URL,
+  buddyspotAppLinkRel,
+  buddyspotAppLinkTarget,
+} from "@/lib/buddyspot-app-url";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -65,9 +70,9 @@ export function Navbar() {
             <Moon className="h-4 w-4 block dark:hidden" />
           </button>
           <a
-            href="https://buddyspot.app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={BUDDYSPOT_APP_URL}
+            target={buddyspotAppLinkTarget()}
+            rel={buddyspotAppLinkRel()}
             className="hidden md:block px-5 py-2 rounded-lg bg-brand text-white text-sm font-bold hover:bg-brand-dark transition"
           >
             {t("openApp")}
@@ -93,9 +98,9 @@ export function Navbar() {
             </Link>
           ))}
           <a
-            href="https://buddyspot.app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={BUDDYSPOT_APP_URL}
+            target={buddyspotAppLinkTarget()}
+            rel={buddyspotAppLinkRel()}
             className="mt-4 block w-full text-center px-5 py-3 rounded-lg bg-brand text-white text-sm font-bold"
           >
             {t("openApp")}

@@ -3,6 +3,11 @@
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import {
+  BUDDYSPOT_APP_URL,
+  buddyspotAppLinkRel,
+  buddyspotAppLinkTarget,
+} from "@/lib/buddyspot-app-url";
 
 export function Footer() {
   const t = useTranslations("footer");
@@ -14,7 +19,7 @@ export function Footer() {
       links: [
         { href: "/features", label: nav("features") },
         { href: "/faq", label: nav("faq") },
-        { label: nav("openApp"), external: "https://buddyspot.app" },
+        { label: nav("openApp"), external: BUDDYSPOT_APP_URL },
       ],
     },
     {
@@ -59,7 +64,20 @@ export function Footer() {
                 {group.links.map((link) => (
                   <li key={link.label}>
                     {link.external ? (
-                      <a href={link.external} target="_blank" rel="noopener noreferrer" className="text-sm text-gray-600 dark:text-gray-400 hover:text-brand transition">
+                      <a
+                        href={link.external}
+                        target={
+                          link.external === BUDDYSPOT_APP_URL
+                            ? buddyspotAppLinkTarget()
+                            : "_blank"
+                        }
+                        rel={
+                          link.external === BUDDYSPOT_APP_URL
+                            ? buddyspotAppLinkRel()
+                            : "noopener noreferrer"
+                        }
+                        className="text-sm text-gray-600 dark:text-gray-400 hover:text-brand transition"
+                      >
                         {link.label}
                       </a>
                     ) : (

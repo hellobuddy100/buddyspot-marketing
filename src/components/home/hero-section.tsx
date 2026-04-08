@@ -5,6 +5,11 @@ import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import {
+  BUDDYSPOT_APP_URL,
+  buddyspotAppLinkRel,
+  buddyspotAppLinkTarget,
+} from "@/lib/buddyspot-app-url";
 
 export function HeroSection() {
   const t = useTranslations("hero");
@@ -48,9 +53,9 @@ export function HeroSection() {
           className="mt-9 flex flex-col sm:flex-row items-center gap-4"
         >
           <a
-            href="https://buddyspot.app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href={BUDDYSPOT_APP_URL}
+            target={buddyspotAppLinkTarget()}
+            rel={buddyspotAppLinkRel()}
             className="flex items-center gap-2 px-8 py-4 rounded-xl bg-brand text-white font-bold text-base hover:bg-brand-dark active:scale-[0.97] transition-all"
           >
             {t("cta")}
